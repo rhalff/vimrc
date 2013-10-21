@@ -33,6 +33,7 @@ Used:
 
   [vim-javascript](https://github.com/pangloss/vim-javascript)
   ```
+  npm i jslint -g
   cd ~/.vim/bundle
   git clone https://github.com/pangloss/vim-javascript.git
   ```
