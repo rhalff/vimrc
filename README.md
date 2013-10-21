@@ -3,6 +3,8 @@ vimrc
 
 My personal vimrc
 
+Good reference: [Vim Plugins Node.js](https://github.com/joyent/node/wiki/Vim-Plugins)
+
 Used:
 
   [jslint.vim](https://github.com/hallettj/jslint.vim.git)
@@ -28,12 +30,16 @@ Used:
   [typescript.vim](https://github.com/leafgarland/typescript-vim.git)
   ```
   cd ~/.vim/bundle
-  git clone https://github.com/leafgarland/typescript-vim.git
+  git clone https://github.com/leafgarland/typescript-vim.git ~/.vim/bundle/typescript-vim
   ```
 
   [vim-javascript](https://github.com/pangloss/vim-javascript)
   ```
   npm i jslint -g
-  cd ~/.vim/bundle
-  git clone https://github.com/pangloss/vim-javascript.git
+  git clone https://github.com/pangloss/vim-javascript.git ~/.vim/bundle/vim-javascript
+  ```
+
+  [vim-node](https://github.com/moll/vim-node)
+  ```
+  git clone https://github.com/moll/vim-node.git ~/.vim/bundle/node
   ```
