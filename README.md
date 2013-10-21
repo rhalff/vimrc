@@ -43,3 +43,19 @@ Used:
   ```
   git clone https://github.com/moll/vim-node.git ~/.vim/bundle/node
   ```
+
+  [mustache.vim](https://github.com/juvenn/mustache.vim)
+  ```
+  git clone https://github.com/juvenn/mustache.vim.git ~/.vim/bundle/mustache
+  ```
+
+  [Syntastic](https://github.com/scrooloose/syntastic)
+  ```
+  git clone https://github.com/scrooloose/syntastic.git ~/.vim/bundle/syntastic
+  npm i jslint -g
+  npm i jshint -g
+  npm i handlebars -g
+  npm i mustache -g
+  sudo apt-get install tidy
+  sudo apt-get install libxml2-utils # for xmllint
+  ```
