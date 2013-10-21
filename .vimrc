@@ -10,6 +10,9 @@
 "
 " These options and commands enable some very useful features in Vim, that
 " no user should have to live without.
+"
+" Use pathogen
+execute pathogen#infect()
 
 " Set 'nocompatible' to ward off unexpected things that your distro might
 " have made, as well as sanely reset options when re-sourcing .vimrc

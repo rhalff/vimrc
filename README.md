@@ -18,10 +18,21 @@ Used:
   Update of vim script complete.
   ```
 
-  [typescript.vim](https://github.com/leafgarland/typescript-vim.git)
-
+  [Pathogen](https://github.com/tpope/pathogen)
   ```
   mkdir -p ~/.vim/autoload ~/.vim/bundle; \
   curl -Sso ~/.vim/autoload/pathogen.vim \
   https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+  ```
+
+  [typescript.vim](https://github.com/leafgarland/typescript-vim.git)
+  ```
+  cd ~/.vim/bundle
+  git clone https://github.com/leafgarland/typescript-vim.git
+  ```
+
+  [vim-javascript](https://github.com/pangloss/vim-javascript)
+  ```
+  cd ~/.vim/bundle
+  git clone https://github.com/pangloss/vim-javascript.git
   ```
