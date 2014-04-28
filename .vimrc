@@ -11,6 +11,9 @@
 " These options and commands enable some very useful features in Vim, that
 " no user should have to live without.
 "
+" place yanked stuff into the global clipboard
+"set clipboard=unnamedplus
+"
 " Use pathogen
 execute pathogen#infect()
 
@@ -26,9 +29,15 @@ filetype plugin on
 " Enable syntax highlighting
 syntax on
 
-" colorscheme morning
-colorscheme koehler 
+" aliases
+autocmd BufNewFile,BufRead *.fbp set filetype=fbp
+autocmd BufNewFile,BufRead *.ejs set filetype=html
 
+" colorscheme morning
+colorscheme koehler
+
+" *always* remove trailing whitespace
+autocmd BufWritePre * :%s/\s\+$//e
 
 "------------------------------------------------------------
 " Must have options {{{1
@@ -116,7 +125,8 @@ set visualbell
 set t_vb=
 
 " Enable use of the mouse for all modes
-set mouse=a
+" don't use this, breaks right mouse click
+"set mouse=a
 
 " Set the command window height to 2 lines, to avoid many cases of having to
 " "press <Enter> to continue"
@@ -140,13 +150,18 @@ set pastetoggle=<F11>
 " Indentation settings for using 2 spaces instead of tabs.
 " Do not change 'tabstop' from its default value of 8 with this setup.
 set shiftwidth=2
-set softtabstop=2
+"set softtabstop=2
+set tabstop=2
 set expandtab
+
+set autoindent
+
+set smartindent
+
 
 " Indentation settings for using hard tabs for indent. Display tabs as
 " two characters wide.
 "set shiftwidth=2
-"set tabstop=2
 
 
 "------------------------------------------------------------
