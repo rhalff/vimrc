@@ -26,15 +26,22 @@ set nocompatible
 " and for plugins that are filetype specific.
 filetype plugin on
 
-" Enable syntax highlighting
-syntax on
-
 " aliases
 autocmd BufNewFile,BufRead *.fbp set filetype=fbp
 autocmd BufNewFile,BufRead *.ejs set filetype=html
 
-" colorscheme morning
-colorscheme koehler
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Enable syntax highlighting
+syntax on
+
+" Set utf8 as standard encoding
+set encoding=utf8
+
+colorscheme desert " morning, koehler
+set background=dark
 
 " *always* remove trailing whitespace
 autocmd BufWritePre * :%s/\s\+$//e
@@ -70,6 +77,9 @@ set wildmenu
 
 " Show partial commands in the last line of the screen
 set showcmd
+
+" Show matching brackets when text indicator is over them
+set showmatch
 
 " Highlight searches (use <C-L> to temporarily turn off highlighting; see the
 " mapping of <C-L> below)
@@ -149,20 +159,22 @@ set pastetoggle=<F11>
 
 " Indentation settings for using 2 spaces instead of tabs.
 " Do not change 'tabstop' from its default value of 8 with this setup.
+"
+" Indentation settings for using hard tabs for indent.
+" Display tabs as two characters wide.
 set shiftwidth=2
+
 "set softtabstop=2
 set tabstop=2
+
+" Use spaces instead of tabs
 set expandtab
 
+" Auto indent
 set autoindent
 
+" Smart indent
 set smartindent
-
-
-" Indentation settings for using hard tabs for indent. Display tabs as
-" two characters wide.
-"set shiftwidth=2
-
 
 "------------------------------------------------------------
 " Mappings {{{1
@@ -177,5 +189,38 @@ map Y y$
 " next search
 nnoremap <C-L> :nohl<CR><C-L>
 
+"------------------------------------------------------------
+" Buffer switching
+"
+" To switch a buffer you must do :bn etc.
+" I find it easier to use the cursor keys for this
+map <Left> :bp<CR><C-L>
+map <Right> :bn<CR><C-L>
+
+" Smart way to move between windows
+" Go to windows with Ctrl + j etc.
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
 
 "------------------------------------------------------------
+" NERDTree
+"
+
+" Map a specific key or shortcut to open NERDTree
+" In this case it's keyboard specific.
+
+" Map Ctrl+n
+map <C-n> :NERDTreeToggle<CR>
+
+" Open NERDTree automatically when vim starts up if no files were specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+" Close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" Always open bookmarks, toggle with B
+let NERDTreeShowBookmarks=1
