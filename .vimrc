@@ -1,25 +1,27 @@
-" URL: http://vim.wikia.com/wiki/Example_vimrc
-" Authors: http://vim.wikia.com/wiki/Vim_on_Freenode
-" Description: A minimal, but feature rich, example .vimrc. If you are a
-"              newbie, basing your first .vimrc on this file is a good choice.
-"              If you're a more advanced user, building your own .vimrc based
-"              on this file is still a good idea.
-
+" URL: https://github.com/rhalff/vimrc
+"
 "------------------------------------------------------------
 " Features {{{1
 "
-" These options and commands enable some very useful features in Vim, that
-" no user should have to live without.
-"
+
 " place yanked stuff into the global clipboard
-"set clipboard=unnamedplus
-"
+" set clipboard=unnamedplus
+" copy/paste to/from x clipboard
+
 " Use pathogen
 execute pathogen#infect()
 
 " Set 'nocompatible' to ward off unexpected things that your distro might
 " have made, as well as sanely reset options when re-sourcing .vimrc
 set nocompatible
+
+" Start searching as soon as you start typing the keyword
+set incsearch
+
+" our leader is ,
+:let mapleader = ","
+
+set clipboard+=unnamed
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
@@ -47,6 +49,25 @@ set background=dark
 autocmd BufWritePre * :%s/\s\+$//e
 
 "------------------------------------------------------------
+" Lazy stuff
+"
+
+
+" double semicolon to add a semicolon ';' at the end of the line
+nnoremap ;; A;<Esc>
+
+" Source the vimrc file after saving it (liveedit)
+autocmd bufwritepost .vimrc source ~/.vimrc
+
+" FOLDING
+set foldenable                     " enable folding
+set foldmethod=indent              " most files are evenly indented
+set foldlevel=99
+
+" allow saving when you forgot sudo
+cmap w!! w !sudo tee % >/dev/null
+
+"------------------------------------------------------------
 " Must have options {{{1
 "
 " These are highly recommended options.
@@ -64,7 +85,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 " for keeping undo history after closing Vim entirely. Vim will complain if you
 " try to quit without saving, and swap files will keep you safe if your computer
 " crashes.
-"set hidden
+set hidden
 
 " Note that not everyone likes working this way (with the hidden option).
 " Alternatives include using tabs or split windows instead of re-using the same
@@ -168,8 +189,6 @@ set shiftwidth=2
 set tabstop=2
 
 " Use spaces instead of tabs
-set expandtab
-
 " Auto indent
 set autoindent
 
@@ -187,18 +206,28 @@ map Y y$
 
 " Map <C-L> (redraw screen) to also turn off search highlighting until the
 " next search
-nnoremap <C-L> :nohl<CR><C-L>
+" nnoremap <C-L> :nohl<CR><C-L>
 
 "------------------------------------------------------------
 " Buffer switching
 "
 " To switch a buffer you must do :bn etc.
-" I find it easier to use the cursor keys for this
-map <Left> :bp<CR><C-L>
-map <Right> :bn<CR><C-L>
+" Use either the cursor keys or Ctrl + l etc.
+" map <Left> :bp<CR><C-L>
+map <leader>h :bp<CR>
+" map <Right> :bn<CR><C-L>
+map <leader>l :bn<CR>
+
+" map <leader>q :bd<CR>
+"
+" leader q closes buffer
+" Uses vim-bbye
+map <Leader>q :Bdelete<CR>
+
+" save file
+map <Leader>w :w<CR>
 
 " Smart way to move between windows
-" Go to windows with Ctrl + j etc.
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
@@ -209,18 +238,24 @@ map <C-l> <C-W>l
 " NERDTree
 "
 
+" Make modifiable
+" set modifiable
+
 " Map a specific key or shortcut to open NERDTree
 " In this case it's keyboard specific.
 
 " Map Ctrl+n
 map <C-n> :NERDTreeToggle<CR>
 
+" Also Map <spacebar> n
+map <leader>n :NERDTreeToggle<CR>
+
 " Open NERDTree automatically when vim starts up if no files were specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Close vim if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Always open bookmarks, toggle with B
 let NERDTreeShowBookmarks=1
