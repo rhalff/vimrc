@@ -5,6 +5,12 @@ My personal vimrc
 
 Good reference: [Vim Plugins Node.js](https://github.com/joyent/node/wiki/Vim-Plugins)
 
+```
+apt-get install vim-gtk
+apt-get install xclip # copy & paste
+
+```
+
 Used:
 
   [jslint.vim](https://github.com/hallettj/jslint.vim.git)

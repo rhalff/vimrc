@@ -21,7 +21,9 @@ set incsearch
 " our leader is ,
 :let mapleader = ","
 
-set clipboard+=unnamed
+" proper copying with Ctrl+v & Ctrl+p
+vmap <C-c> :<Esc>`>a<CR><Esc>mx`<i<CR><Esc>my'xk$v'y!xclip -selection c<CR>u
+map <Insert> :set paste<CR>i<CR><CR><Esc>k:.!xclip -o<CR>JxkJx:set nopaste<CR>
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents. Use this to allow intelligent auto-indenting for each filetype,
