@@ -65,3 +65,9 @@ Used:
   sudo apt-get install tidy
   sudo apt-get install libxml2-utils # for xmllint
   ```
+
+ ### Personal Bad Habits
+
+  - Using the more awkward right shift for `:` instead of the left one
+  - Navigating with j and k only
+  - Not using 1Q to go to top of window, but 9999k

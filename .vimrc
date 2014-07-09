@@ -18,6 +18,9 @@ set nocompatible
 " Start searching as soon as you start typing the keyword
 set incsearch
 
+" Set terminal to 256 colors
+set t_Co=256
+
 " our leader is ,
 :let mapleader = ","
 
@@ -34,6 +37,46 @@ filetype plugin on
 autocmd BufNewFile,BufRead *.fbp set filetype=fbp
 autocmd BufNewFile,BufRead *.ejs set filetype=html
 
+" Add a bit extra margin to the left
+set foldcolumn=1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Moving around, tabs, windows and buffers
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+
+" close everything without saving using F4
+nnoremap <F4> :qa!<CR>
+
+""""""""""""""""""""""""""""""
+" => Status line
+""""""""""""""""""""""""""""""
+" Always show the status line
+set laststatus=2
+
+" Returns true if paste mode is enabled
+function! HasPaste()
+    if &paste
+        return 'PASTE MODE  '
+    en
+    return ''
+endfunction
+
+" Format the status line
+" set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => gitgutter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" let g:gitgutter_realtime = 1
+" let g:gitgutter_enabled = 1
+" let g:gitgutter_highlight_lines = 1
+" hi SignColumn ctermbg=black
+"gitgutter
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -44,7 +87,7 @@ syntax on
 " Set utf8 as standard encoding
 set encoding=utf8
 
-colorscheme desert " morning, koehler
+colorscheme peaksea " molokai, peaksea, solarized
 set background=dark
 
 " *always* remove trailing whitespace
@@ -54,17 +97,11 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Lazy stuff
 "
 
-
 " double semicolon to add a semicolon ';' at the end of the line
 nnoremap ;; A;<Esc>
 
 " Source the vimrc file after saving it (liveedit)
 autocmd bufwritepost .vimrc source ~/.vimrc
-
-" FOLDING
-set foldenable                     " enable folding
-set foldmethod=indent              " most files are evenly indented
-set foldlevel=99
 
 " allow saving when you forgot sudo
 cmap w!! w !sudo tee % >/dev/null
@@ -191,11 +228,19 @@ set shiftwidth=2
 set tabstop=2
 
 " Use spaces instead of tabs
+set expandtab
+
+" be smart when using tabs
+set smarttab
+
 " Auto indent
 set autoindent
 
 " Smart indent
 set smartindent
+
+" wrap lines
+set wrap
 
 "------------------------------------------------------------
 " Mappings {{{1
@@ -226,6 +271,19 @@ map <leader>l :bn<CR>
 " Uses vim-bbye
 map <Leader>q :Bdelete<CR>
 
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+map <space> /
+map <c-space> ?
+
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+  \ if line("'\"") > 0 && line("'\"") <= line("$") |
+  \   exe "normal! g`\"" |
+  \ endif
+
+" Remember info about open buffers on close
+set viminfo^=%
+
 " save file
 map <Leader>w :w<CR>
 
@@ -253,11 +311,122 @@ map <C-n> :NERDTreeToggle<CR>
 map <leader>n :NERDTreeToggle<CR>
 
 " Open NERDTree automatically when vim starts up if no files were specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" CONFLICTS WITH STARTIFY (I hope)
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " Close vim if the only window left open is a NERDTree
-" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " Always open bookmarks, toggle with B
 let NERDTreeShowBookmarks=1
+
+" Mark the eightieth column so I know when to do a linebreak!
+if exists('+colorcolumn')
+  set colorcolumn=80
+  hi ColorColumn ctermbg=DarkGray guibg=darkgray
+endif
+
+""""""""""""""""""""""""""""""
+" => Airline
+"""""""""""""""""""""""""""""""
+
+" automatically displays all buffers when there's only one tab open.
+let g:airline#extensions#tabline#enabled = 1
+
+" automatically popluate the g:airline_symobols dictionary with the powerline symbols
+let g:airline_powerline_fonts = 1
+let g:airline_theme='powerlineish'
+let g:airline_enable_fugitive=1
+
+""""""""""""""""""""""""""""""
+" => Folding
+"""""""""""""""""""""""""""""""
+
+" enable folding
+set foldenable
+
+" most files are evenly indented
+set foldmethod=indent
+
+" open all folds
+set foldlevel=20
+set foldlevelstart=20
+
+" Toggle folds by pressing F9
+inoremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
+
+""""""""""""""""""""""""""""""
+" => Startify
+"""""""""""""""""""""""""""""""
+let g:startify_list_order = ['sessions', 'files', 'bookmarks']
+hi StartifyHeader  ctermfg=226
+let g:startify_custom_header = [
+                \ '          _,    _   _    ,_            ',
+                \ '     .o888P     Y8o8Y     Y888o.       ',
+                \ '    d88888      88888      88888b      ',
+                \ '   d888888b_  _d88888b_  _d888888b     ',
+                \ '   8888888888888888888888888888888         ____            __   _    __   _             ',
+                \ "   8888888888888888888888888888888        / __ '  ____ _  / /_ | |  / /  (_)  ____ ___ ",
+                \ '   YJGS8P"Y888P"Y888P"Y888P"Y8888P       / __  | / __ `/ / __/ | | / /  / /  / __ `__ \',
+                \ "    Y888   '8'   Y8P   '8'   888Y       / /_/ / / /_/ / / /_   | |/ /  / /  / / / / / /",
+                \ "     '8o          V          o8'       /_____/  \\__,_/  \\__/   |___/  /_/  /_/ /_/ /_/",
+                \ '       `                     `         ',
+                \ '',]
+
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" Save and load fold settings automatically
+" Reference: http://vim-users.jp/2009/10/hack84/
+" Don't save options.
+set viewoptions-=options
+augroup vimrc
+    autocmd BufWritePost *
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|      mkview
+    \|  endif
+    autocmd BufRead *
+    \   if expand('%') != '' && &buftype !~ 'nofile'
+    \|      silent loadview
+    \|  endif
+augroup END
+
+
+""""""""""""""""""""""""""""""
+" => Syntastic
+"""""""""""""""""""""""""""""""
+
+" display together the errors found by all checkers enabled for the current file
+let g:syntastic_aggregate_errors = 1
+
+""""""""""""""""""""""""""""""
+" => JavaScript section
+"""""""""""""""""""""""""""""""
+
+" Enables concealing characters, e.g. function is replaced with f
+let g:javascript_conceal = 1
+" let b:javascript_fold = 0
+"
+" au FileType javascript call JavaScriptFold()
+" au FileType javascript setl fen
+" au FileType javascript setl nocindent
+
+" au FileType javascript imap <c-t> AJS.log();<esc>hi
+" au FileType javascript imap <c-a> alert();<esc>hi
+
+" au FileType javascript inoremap <buffer> $r return
+" au FileType javascript inoremap <buffer> $f //--- PH ----------------------------------------------<esc>FP2xi
+" au FileType javascript inoremap <buffer> $f //--- PH esc>FP2xi
+
+function! JavaScriptFold()
+    setl foldmethod=syntax
+    setl foldlevelstart=1
+    syn region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+
+    function! FoldText()
+        return substitute(getline(v:foldstart), '{.*', '{...}', '')
+    endfunction
+    setl foldtext=FoldText()
+endfunction
