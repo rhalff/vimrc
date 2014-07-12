@@ -8,8 +8,11 @@ Good reference: [Vim Plugins Node.js](https://github.com/joyent/node/wiki/Vim-Pl
 ```
 apt-get install vim-gtk
 apt-get install xclip # copy & paste
+apt-get install ack-grep # for ack.vim
 
 ```
+
+TODO: make these submodules
 
 Used:
 
@@ -24,6 +27,13 @@ Used:
   Installed ftplugin/javascript/jslint/runjslint.js to /home/rob/.vim/ftplugin/javascript/jslint/
   Installed ftplugin/javascript/jslint/runjslint.wsf to /home/rob/.vim/ftplugin/javascript/jslint/
   Update of vim script complete.
+  ```
+
+  [Ack-vim](https://github.com/tyok/ack.vim)
+  ```
+  cd ~/vim/bundle
+  sudo apt-get install ack-grep
+  git clone https://github.com/tyok/ack.vim
   ```
 
   [Pathogen](https://github.com/tpope/pathogen)
