@@ -61,3 +61,9 @@
 [submodule ".vim/bundle/phpcomplete-extended"]
 	path = .vim/bundle/phpcomplete-extended
 	url = git@github.com:m2mdas/phpcomplete-extended.git
+[submodule ".vim/bundle/vim-jsdoc"]
+	path = .vim/bundle/vim-jsdoc
+	url = git@github.com:heavenshell/vim-jsdoc.git
+[submodule ".vim/bundle/editorconfig-vim"]
+	path = .vim/bundle/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git
