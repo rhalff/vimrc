@@ -12,7 +12,9 @@ apt-get install ack-grep # for ack.vim
 
 ```
 
-TODO: make these submodules
+Install:
+
+./install.sh
 
 Used:
 
