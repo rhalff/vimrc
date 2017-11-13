@@ -9,3 +9,5 @@ sudo apt install cmake python-dev vim-nox-py2
 
 # For ctags
 sudo apt install exuberant-ctags
+
+cd .vim/bundle/tern_for_vim && yarn
